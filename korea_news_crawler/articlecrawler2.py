@@ -17,8 +17,9 @@ import logging
 import tqdm
 
 logger = logging.getLogger(__name__)
-TARGET = '정치 경제 사회 생활문화 세계 IT과학 오피니언'
+TARGET = '정치 사회 생활문화 세계 IT과학 오피니언'
 SUB_TARGET = '증권 금융 부동산 산업재계 글로벌경제 경제일반 생활경제 증기벤처'
+
 
 class ArticleCrawler(object):
     def __init__(self):
@@ -274,6 +275,7 @@ class ArticleCrawler(object):
                         pass
             writer.close()
 
+        print("End article crawler ({})".format(category_name))
         logger.info("End article crawler ({})".format(category_name))
 
     def crawling(self, category_name, subcategory_name=''):
@@ -288,6 +290,7 @@ class ArticleCrawler(object):
             day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'],
                                                self.date['start_month'], self.date['end_month'])
             logger.info(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
+            print(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
 
             for URL in day_urls:
                 regex = re.compile("date=(\d+)")
@@ -370,6 +373,7 @@ class ArticleCrawler(object):
             day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'],
                                                self.date['start_month'], self.date['end_month'])
             logger.info(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
+            print(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
 
             for URL in day_urls:
                 regex = re.compile("date=(\d+)")
@@ -440,6 +444,7 @@ class ArticleCrawler(object):
             writer.close()
 
         logger.info("End article crawler ({})".format(category_name))
+        print("End article crawler ({})".format(category_name))
 
     def start(self):
         # MultiProcess 크롤링 시작
