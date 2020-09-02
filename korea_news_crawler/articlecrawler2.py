@@ -17,7 +17,7 @@ import logging
 import tqdm
 
 logger = logging.getLogger(__name__)
-TARGET = '정치 사회 생활문화 세계 IT과학 연예 스포츠 오피니언'
+TARGET = '정치 경제 사회 생활문화 세계 IT과학 오피니언'
 SUB_TARGET = '증권 금융 부동산 산업재계 글로벌경제 경제일반 생활경제 증기벤처'
 
 class ArticleCrawler(object):
@@ -460,7 +460,7 @@ if __name__ == "__main__":
         level=logging.INFO,
     )
     Crawler = ArticleCrawler()
-    # Crawler.set_category(*tuple(re.split(' ', TARGET)), subcategories=re.split(' ', SUB_TARGET))
-    Crawler.set_category("경제", "IT과학", subcategories=['금융', '증권'])
-    Crawler.set_date_range(2017, 1, 2017, 2)
+    Crawler.set_category(*tuple(re.split(' ', TARGET)), subcategories=re.split(' ', SUB_TARGET))
+    # Crawler.set_category("경제", "IT과학", subcategories=['금융', '증권'])
+    Crawler.set_date_range(2016, 1, 2016, 2)
     Crawler.start()
