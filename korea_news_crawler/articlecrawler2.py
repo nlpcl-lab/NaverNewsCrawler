@@ -109,8 +109,8 @@ class ArticleCrawler(object):
             writer = Writer(category_name=category_name, date=self.date, subcategory_name=subcategory_name)
 
             # 기사 URL 형식
-            url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec&sid1=" + str(
-                self.categories.get(category_name)) + "&sid2=" + str(self.subcategories.get(subcategory_name)) + "&date="
+            url = "http://news.naver.com/main/list.nhn?mode=LSD&mid=sec" + "&sid2=" + str(self.subcategories.get(subcategory_name))
+            + "&sid1=" + str(self.categories.get(category_name)) + "&date="
 
             # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
             day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'],
