@@ -108,7 +108,7 @@ class ArticleCrawler(object):
         if subcategory_name:
             writer = Writer(category_name=category_name, date=self.date, subcategory_name=subcategory_name)
 
-            # 기사 URL 형식
+            # 기사 URL 형식 sid2까지 하는 경우 mode=LS2D, sid1만 하는경우 LSD해야함.
             url = "http://news.naver.com/main/list.nhn?mode=LS2D&mid=sec" + "&sid2=" + str(self.subcategories.get(subcategory_name)) + "&sid1=" + str(self.categories.get(category_name)) + "&date="
 
             # start_year년 start_month월 ~ end_year의 end_month 날짜까지 기사를 수집합니다.
@@ -187,6 +187,8 @@ class ArticleCrawler(object):
                         pass
 
             writer.close()
+            print("{} End article crawler ({}-{})".format(now.strftime('%Y-%m-%d %H:%M:%S'), category_name,
+                                                          subcategory_name))
         else:
             writer = Writer(category_name=category_name, date=self.date)
 
@@ -267,9 +269,9 @@ class ArticleCrawler(object):
                         del request_content, document_content
                         pass
             writer.close()
+            print("{} End article crawler ({})".format(now.strftime('%Y-%m-%d %H:%M:%S'), category_name))
 
         logger.info("End article crawler ({})".format(category_name))
-        print("{} End article crawler ({})".format(now.strftime('%Y-%m-%d %H:%M:%S'), category_name))
 
     def start(self):
         # MultiProcess 크롤링 시작
