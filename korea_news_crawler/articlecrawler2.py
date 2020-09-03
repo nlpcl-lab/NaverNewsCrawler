@@ -14,9 +14,10 @@ import requests
 import re
 import random
 import logging
-import tqdm
+import datetime
 
 logger = logging.getLogger(__name__)
+now = datetime.datetime.now()
 TARGET = '정치 사회 생활문화 세계 IT과학 오피니언'
 SUB_TARGET = '증권 금융 부동산 산업재계 글로벌경제 경제일반 생활경제 증기벤처'
 
@@ -32,6 +33,7 @@ class ArticleCrawler(object):
         self.date = {'start_year': 0, 'start_month': 0, 'end_year': 0, 'end_month': 0}
         self.user_operating_system = str(platform.system())
         logger.info("Start article crawler")
+        print("{} Start article crawler".format(now.strftime('%Y-%m-%d %H:%M:%S')))
 
     def set_category(self, *args, subcategories=[]):
         for key in args:
@@ -275,7 +277,7 @@ class ArticleCrawler(object):
                         pass
             writer.close()
 
-        print("End article crawler ({})".format(category_name))
+        print("{} End article crawler ({})".format(now.strftime('%Y-%m-%d %H:%M:%S'), category_name))
         logger.info("End article crawler ({})".format(category_name))
 
     def crawling(self, category_name, subcategory_name=''):
@@ -290,7 +292,7 @@ class ArticleCrawler(object):
             day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'],
                                                self.date['start_month'], self.date['end_month'])
             logger.info(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
-            print(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
+            print(now.strftime('%Y-%m-%d %H:%M:%S') + ' ' + category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
 
             for URL in day_urls:
                 regex = re.compile("date=(\d+)")
@@ -373,7 +375,7 @@ class ArticleCrawler(object):
             day_urls = self.make_news_page_url(url, self.date['start_year'], self.date['end_year'],
                                                self.date['start_month'], self.date['end_month'])
             logger.info(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
-            print(category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
+            print(now.strftime('%Y-%m-%d %H:%M:%S') + ' ' + category_name + "(PID: {}) Urls are generated ({}) & the crawler starts".format(str(os.getpid()), day_urls[:3]))
 
             for URL in day_urls:
                 regex = re.compile("date=(\d+)")
@@ -444,7 +446,7 @@ class ArticleCrawler(object):
             writer.close()
 
         logger.info("End article crawler ({})".format(category_name))
-        print("End article crawler ({})".format(category_name))
+        print("{} End article crawler ({})".format(now.strftime('%Y-%m-%d %H:%M:%S'), category_name))
 
     def start(self):
         # MultiProcess 크롤링 시작
@@ -467,5 +469,5 @@ if __name__ == "__main__":
     Crawler = ArticleCrawler()
     Crawler.set_category(*tuple(re.split(' ', TARGET)), subcategories=re.split(' ', SUB_TARGET))
     # Crawler.set_category("경제", "IT과학", subcategories=['금융', '증권'])
-    Crawler.set_date_range(2016, 1, 2016, 2)
+    Crawler.set_date_range(2017, 1, 2017, 2)
     Crawler.start()
