@@ -1,3 +1,7 @@
+################################################################
+# 2020.09.08 articleparser2.py: articleparser.py에 sid2 고려 가능한 버전입니다.
+# 경제 category일 경우 subcategory (sid2) 고려합니다.
+################################################################
 #!/usr/bin/env python
 # -*- coding: utf-8, euc-kr -*-
 
@@ -18,7 +22,7 @@ import datetime
 
 logger = logging.getLogger(__name__)
 now = datetime.datetime.now()
-TARGET = '정치 사회' # 생활문화 세계 IT과학 오피니언'
+TARGET = '정치 사회 오피니언' #생활문화 세계 IT과학
 SUB_TARGET = '증권 금융 부동산 산업재계 글로벌경제 경제일반 생활경제 증기벤처'
 
 
@@ -294,5 +298,5 @@ if __name__ == "__main__":
     Crawler = ArticleCrawler()
     Crawler.set_category(*tuple(re.split(' ', TARGET)), subcategories=re.split(' ', SUB_TARGET))
     # Crawler.set_category("경제", "IT과학", subcategories=['금융', '증권'])
-    Crawler.set_date_range(2017, 1, 2017, 2)
+    Crawler.set_date_range(2016, 7, 2016, 12)
     Crawler.start()
