@@ -22,7 +22,7 @@ import datetime
 
 logger = logging.getLogger(__name__)
 now = datetime.datetime.now()
-TARGET = '정치 사회 오피니언' #생활문화 세계 IT과학
+TARGET = '세계 생활문화'# '정치 사회 오피니언' #생활문화 세계 IT과학
 SUB_TARGET = '증권 금융 부동산 산업재계 글로벌경제 경제일반 생활경제 증기벤처'
 
 
@@ -298,5 +298,5 @@ if __name__ == "__main__":
     Crawler = ArticleCrawler()
     Crawler.set_category(*tuple(re.split(' ', TARGET)), subcategories=re.split(' ', SUB_TARGET))
     # Crawler.set_category("경제", "IT과학", subcategories=['금융', '증권'])
-    Crawler.set_date_range(2016, 7, 2016, 12)
+    Crawler.set_date_range(2016, 8, 2016, 12)
     Crawler.start()
