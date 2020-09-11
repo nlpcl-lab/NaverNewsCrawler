@@ -4,6 +4,15 @@
 이 크롤러는 아래 저작자 코드를 기반으로 수정된 프로젝트입니다.
 (신한-카이스트 금융 특화 언어 모델 학습을 위한 말뭉치 수집 코드입니다.)
 
+- python3 linux / window 에서 실행가능
+
+1. 설치
+unzip project or git clone ###
+
+2. 사용 명령어 예제
+(linux) python3 main.py <extracted_wiki_dir> <collected_file_name>
+WikiExtractor.py: bzcat dataset/kowiki-20200820-pages-articles-multistream.xml.bz2| -o dataset/kowiki20200820 --processes 24 --no-doc --no-title --no-templates -
+TextCollector.py: python TextCollector.py dataset/kowiki20200820 kowiki_all.txt
 
 =================================================================================================
 
