@@ -9,10 +9,13 @@
 - ContentRemover.py: 수집된 텍스트 전처리
 
 1. 설치
+
 unzip project or git clone ###
 
 2. 사용 명령어 예제
+
 main.py: python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 글로벌경제-경제일반
+
 ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
 
 =================================================================================================
