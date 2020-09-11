@@ -41,27 +41,6 @@ ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
   
  이 메서드는 크롤링 실행 메서드입니다.
   
-## Example
-```
-from korea_news_crawler.articlecrawler import ArticleCrawler
-
-Crawler = ArticleCrawler()  
-Crawler.set_category("정치", "IT과학", "economy")  
-Crawler.set_date_range(2017, 1, 2018, 4)  
-Crawler.start()
-```
-  2017년 1월 ~ 2018년 4월까지 정치, IT과학, 경제 카테고리 뉴스를 멀티프로세서를 이용하여 병렬 크롤링을 진행합니다.
-  
-## Multi Process 안내
-  intel i5 9600 cpu로 테스트 해본 결과 1개의 카테고리 당 평균 **8%** 의 cpu 점유율을 보였습니다.  
-  크롤러를 실행하는 컴퓨터 사양에 맞게 카테고리 개수를 맞추시거나 반복문을 이용하시기 바랍니다.
-  
-  ![ex_screenshot](./img/multi_process.PNG)
-  
-## Results
- ![ex_screenshot](./img/article_result.PNG)
- ![ex_screenshot](./img/sport_resultimg.PNG)
- 
  Colum A: 기사 날짜  
  Colum B: 기사 카테고리  
  Colum C: 언론사  
@@ -71,69 +50,6 @@ Crawler.start()
  
  수집한 모든 데이터는 csv 확장자로 저장됩니다.  
 
-
-# KoreaNewsCrawler (English version)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
-This crawler crawles news from portal Naver  
-Crawlable article categories include politics, economy, lifeculture, global, IT/science, society.  
-In the case of sports articles, that include Baseball, soccer, basketball, volleyball, golf, general sports, e-sports.  
-
-**In the case of sports articles, you can't use sport article crawler because html form is changed. I will update sport article crawler 
-as soon as possible.**
-
-## User Python Installation
-  * **KoreaNewsCrawler**
-
-    ``` pip install KoreaNewsCrawler ```
-    
-## Method
-
-* **set_category(category_name)**
- 
- This method is setting categories that you want to crawl.  
- Categories that can be entered into parameters are politics, economy, society, living_culture, IT_science. 
- Multiple parameters can be entered.
-  
-* **set_date_range(startyear, startmonth, endyear, endmonth)**
-  
- This method represents the duration of the news you want to collect.  
- Data is collected from startmonth to endmonth.
-  
-* **start()**
- 
- This method is the crawl execution method.
-  
-## Example
-```
-from korea_news_crawler.articlecrawler import ArticleCrawler
-
-Crawler = ArticleCrawler()  
-Crawler.set_category("politics", "IT_science", "economy")  
-Crawler.set_date_range(2017, 1, 2018, 4)  
-Crawler.start()
-```
- From January 2017 to April 2018, Parallel crawls will be conducted using multiprocessors for political, IT science, world, and economic category news.
-  
-## Multi Process Information
-Testing with intel i5 9600 cpu showed an average ** 8% ** cpu share per category.  
-Please adjust the number of categories to match the specifications of the computer running the crawler, or use a loop.
-  
-  ![ex_screenshot](./img/multi_process.PNG)
-  
-## Results
- ![ex_screenshot](./img/article_result.PNG)
- ![ex_screenshot](./img/sport_resultimg.PNG)
- 
- Colum A: Article Date  
- Colum B: Article Category  
- Colum C: Article Press  
- Colum D: Article headline  
- Colum E: Article Content  
- Colum F: Article URL  
- 
- All collected data is saved as a csv.
- 
 ## License
  Apache License 2.0
  
