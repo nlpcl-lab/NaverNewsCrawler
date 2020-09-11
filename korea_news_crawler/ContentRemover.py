@@ -23,8 +23,8 @@ def main():
     parser = argparse.ArgumentParser(prog=os.path.basename(sys.argv[0]),
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=__doc__)
-    parser.add_argument("input", help="wiki directory")
-    parser.add_argument("output", help="output file name")
+    parser.add_argument("input", help="input directory including text files")
+    parser.add_argument("output", help="new directory name (not pathway)")
     args = parser.parse_args()
 
     # 1. list naver news list (glob)
