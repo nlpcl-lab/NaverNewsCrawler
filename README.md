@@ -14,7 +14,7 @@ unzip project or git clone ###
 
 2. 사용 명령어 예제
 
-main.py: python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 글로벌경제-경제일반
+main.py: python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
 
 ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
 
