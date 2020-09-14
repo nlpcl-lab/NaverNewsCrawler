@@ -177,71 +177,72 @@ def main(args):
     for i in tqdm(range(0, number)):
         # 글 띄우기
         url = df['url'][i]
+        iterative_crawling_blogs(df, url)
 
-        try:
-            driver = get_driver()
-            driver.get(url)  # 글 띄우기
-            time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
-        except:
-            time.sleep(3 + 17/97 - random.randint(1, 999)/7000)
-            driver = get_driver()
-            driver.get(url)  # 글 띄우기
-            time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
-            continue
 
-        # 크롤링
+def iterative_crawling_blogs(df, url):
+    try:
+        driver = get_driver()
+        driver.get(url)  # 글 띄우기
+        time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
+    except:
+        time.sleep(3 + 17/97 - random.randint(1, 999)/7000)
+        driver = get_driver()
+        driver.get(url)  # 글 띄우기
+        time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
 
-        try:
-            # iframe 접근
-            driver.switch_to.frame('mainFrame')
+    # 크롤링
+    try:
+        # iframe 접근
+        driver.switch_to.frame('mainFrame')
 
-            target_info = {}
+        target_info = {}
 
-            # 제목 크롤링 시작
-            overlays = ".se-fs-.se-ff-"
-            tit = driver.find_element_by_css_selector(overlays)  # title
-            title = tit.text
+        # 제목 크롤링 시작
+        overlays = ".se-fs-.se-ff-"
+        tit = driver.find_element_by_css_selector(overlays)  # title
+        title = tit.text
 
-            # 글쓴이 크롤링 시작
-            overlays = ".nick"
-            nick = driver.find_element_by_css_selector(overlays)  # nick
-            nickname = nick.text
-            nickname = re.sub('[\t\r\n]+', '  ', nickname)
+        # 글쓴이 크롤링 시작
+        overlays = ".nick"
+        nick = driver.find_element_by_css_selector(overlays)  # nick
+        nickname = nick.text
+        nickname = re.sub('[\t\r\n]+', '  ', nickname)
 
-            # 날짜 크롤링
-            overlays = ".se_publishDate.pcol2"
-            date = driver.find_element_by_css_selector(overlays)  # date
-            _datetime = date.text
+        # 날짜 크롤링
+        overlays = ".se_publishDate.pcol2"
+        date = driver.find_element_by_css_selector(overlays)  # date
+        _datetime = date.text
 
-            # 내용 크롤링
-            overlays = ".se-component.se-text.se-l-default"
-            contents = driver.find_elements_by_css_selector(overlays)  # date
+        # 내용 크롤링
+        overlays = ".se-component.se-text.se-l-default"
+        contents = driver.find_elements_by_css_selector(overlays)  # date
 
-            content_list = []
-            for content in contents:
-                content_list.append(content.text)
+        content_list = []
+        for content in contents:
+            content_list.append(content.text)
 
-            content_str = ' '.join(content_list)
-            content_str = re.sub('[\t\r\n]+', '  ', content_str)
+        content_str = ' '.join(content_list)
+        content_str = re.sub('[\t\r\n]+', '  ', content_str)
 
-            # 글 하나는 target_info라는 딕셔너리에 담기게 되고,
-            target_info['title'] = title
-            target_info['nickname'] = nickname
-            target_info['datetime'] = _datetime
-            target_info['content'] = content_str
+        # 글 하나는 target_info라는 딕셔너리에 담기게 되고,
+        target_info['title'] = title
+        target_info['nickname'] = nickname
+        target_info['datetime'] = _datetime
+        target_info['content'] = content_str
 
-            report("{}: {} saved".format(i, title))
-            writer.write("{}\t{}\t{}\t{}\t{}\n".format(_datetime, title, nickname, content_str, df['url'][i]))
+        report("{}: {} saved".format(i, title))
+        writer.write("{}\t{}\t{}\t{}\t{}\n".format(_datetime, title, nickname, content_str, df['url'][i]))
 
-            # 글 하나 크롤링 후 크롬 창 닫기
-            driver.close()
-            time.sleep(1 + 17 / 97 - random.randint(1, 999) / 7000)
+        # 글 하나 크롤링 후 크롬 창 닫기
+        driver.close()
+        time.sleep(1 + 17 / 97 - random.randint(1, 999) / 7000)
 
-            # 에러나면 현재 크롬창 닫고 다음 글(i+1)로 이동
-        except:
-            driver.close()
-            time.sleep(1 + 17/97 - random.randint(1, 999)/7000)
-            continue
+        # 에러나면 현재 크롬창 닫고 다음 글(i+1)로 이동
+    except:
+        driver.close()
+        time.sleep(1 + 17/97 - random.randint(1, 999)/7000)
+        return 0
 
 
 if __name__ == '__main__':
