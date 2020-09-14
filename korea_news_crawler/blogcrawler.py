@@ -1,4 +1,8 @@
 # prerequisite: https://chromedriver.storage.googleapis.com/index.html?path=85.0.4183.87/
+# linux:
+# 1. path = chromedriver 절대경로 입력(wget https://chromedriver.storage.googleapis.com/85.0.4183.87/chromedriver_linux64.zip)
+# 2. 모든 webdriver.Chrome(path)로 변경
+# 3. chrome_options로 --headless, --no-sandbox, --disable-dev-shm-usage 추가.
 
 import re
 import sys
@@ -8,11 +12,11 @@ import argparse
 import datetime
 import codecs
 import pandas as pd
-import numpy as np
-from bs4 import BeautifulSoup
-from selenium import webdriver
+import platform
 import time
 import tqdm
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from tqdm import tqdm
 
 now = datetime.datetime.now()
@@ -49,11 +53,23 @@ def date_generator(start, end):
     return result
 
 
+def get_driver():
+    if str(platform.system()) == 'Windows':
+        path = "chromedriver.exe"
+        driver = webdriver.Chrome(path)
+    else:
+        options = Options()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        path = "/home/jae4258/project/NaverNewsCrawler/korea_news_crawler/chromedriver"
+        driver = webdriver.Chrome(path, chrome_options=options)
+    return driver
+
+
 def main(args):
     # Step 1. 크롬 웹브라우저 실행
-    path = "chromedriver.exe"
-
-    driver = webdriver.Chrome(path)
+    driver = get_driver()
     # 사이트 주소는 네이버
     driver.get('http://www.naver.com')
     time.sleep(2 + 1/17 - random.randint(1, 100)/700)
@@ -152,7 +168,7 @@ def main(args):
     report('url갯수: {}'.format(len(url_list)))
     report('title갯수: {}'.format(len(title_list)))
     driver.close()
-    time.sleep(1 + 17 / 97 - random.randint(1, 999) / 7000)     # 닫으면 1초정도 대기
+    time.sleep(3 + 17 / 97 - random.randint(1, 999) / 7000)     # 닫으면 1초정도 대기
 
     df = pd.DataFrame({'url': url_list, 'title': title_list})
 
@@ -161,8 +177,17 @@ def main(args):
     for i in tqdm(range(0, number)):
         # 글 띄우기
         url = df['url'][i]
-        driver = webdriver.Chrome("chromedriver.exe")
-        driver.get(url)  # 글 띄우기
+
+        try:
+            driver = get_driver()
+            driver.get(url)  # 글 띄우기
+            time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
+        except:
+            time.sleep(3 + 17/97 - random.randint(1, 999)/7000)
+            driver = get_driver()
+            driver.get(url)  # 글 띄우기
+            time.sleep(2 + 8 / 97 - random.randint(1, 999) / 7000)
+            continue
 
         # 크롤링
 
@@ -204,13 +229,13 @@ def main(args):
             target_info['nickname'] = nickname
             target_info['datetime'] = _datetime
             target_info['content'] = content_str
-            time.sleep(1 + 17/97 - random.randint(1, 999)/7000)
 
             report("{}: {} saved".format(i, title))
             writer.write("{}\t{}\t{}\t{}\t{}\n".format(_datetime, title, nickname, content_str, df['url'][i]))
 
             # 글 하나 크롤링 후 크롬 창 닫기
             driver.close()
+            time.sleep(1 + 17 / 97 - random.randint(1, 999) / 7000)
 
             # 에러나면 현재 크롬창 닫고 다음 글(i+1)로 이동
         except:
@@ -225,7 +250,7 @@ if __name__ == '__main__':
                                      description=__doc__)
     parser.add_argument("--keywords", default='오-가-다-어-은-이-아',
                         help="keywords separated by '-' for searching")
-    parser.add_argument("--start", default='20200101', help="the start date to crawl blogs")
+    parser.add_argument("--start", default='20200103', help="the start date to crawl blogs")
     parser.add_argument("--end", default='20200901', help="the end date to crawl blogs")
     # parser.add_argument("--display-num", default='100', help="the number of posts per page to be displayed")
     # parser.add_argument("--display-order", default='date', help="the order of pages (sim: similarity, date)")
@@ -240,3 +265,4 @@ if __name__ == '__main__':
             args.keyword = keyword
             with codecs.open('../data/blogs/Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date), 'w', encoding='utf-8', errors='ignore') as writer:
                 main(args)
+                time.sleep(3 - random.randint(999/7000))
