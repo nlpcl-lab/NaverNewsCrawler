@@ -67,7 +67,7 @@ def get_driver():
     return driver
 
 
-def main(args, writer):
+def main(args, fout):
     # Step 1. 크롬 웹브라우저 실행
     driver = get_driver()
     # 사이트 주소는 네이버
@@ -177,10 +177,10 @@ def main(args, writer):
     for i in tqdm(range(0, number)):
         # 글 띄우기
         url = df['url'][i]
-        iterative_crawling_blogs(df, url, writer)
+        iterative_crawling_blogs(df, url, fout)
 
 
-def iterative_crawling_blogs(df, url, writer):
+def iterative_crawling_blogs(df, url, fout):
     try:
         driver = get_driver()
         driver.get(url)  # 글 띄우기
@@ -232,7 +232,7 @@ def iterative_crawling_blogs(df, url, writer):
         target_info['content'] = content_str
 
         report("{}: {} saved".format(i, title))
-        writer.write("{}\t{}\t{}\t{}\t{}\n".format(_datetime, title, nickname, content_str, df['url'][i]))
+        fout.write("{}\t{}\t{}\t{}\t{}\n".format(_datetime, title, nickname, content_str, url))
 
         # 글 하나 크롤링 후 크롬 창 닫기
         driver.close()
@@ -264,8 +264,8 @@ if __name__ == '__main__':
         args.end_date = i
         for keyword in re.split('-', args.keywords):
             args.keyword = keyword
-            with codecs.open('../data/blogs/Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date), 'w', encoding='utf-8', errors='ignore') as writer:
+            with codecs.open('../data/blogs/Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date), 'w', encoding='utf-8', errors='ignore') as fout:
                 report('open Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date))
-                main(args, writer)
+                main(args, fout)
                 report('close Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date))
                 time.sleep(3 - random.randint(1, 999) / 7000)
