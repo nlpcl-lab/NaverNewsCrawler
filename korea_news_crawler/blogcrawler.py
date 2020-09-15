@@ -67,7 +67,7 @@ def get_driver():
     return driver
 
 
-def main(args):
+def main(args, writer):
     # Step 1. 크롬 웹브라우저 실행
     driver = get_driver()
     # 사이트 주소는 네이버
@@ -177,10 +177,10 @@ def main(args):
     for i in tqdm(range(0, number)):
         # 글 띄우기
         url = df['url'][i]
-        iterative_crawling_blogs(df, url)
+        iterative_crawling_blogs(df, url, writer)
 
 
-def iterative_crawling_blogs(df, url):
+def iterative_crawling_blogs(df, url, writer):
     try:
         driver = get_driver()
         driver.get(url)  # 글 띄우기
@@ -251,7 +251,7 @@ if __name__ == '__main__':
                                      description=__doc__)
     parser.add_argument("--keywords", default='오-가-다-어-은-이-아',
                         help="keywords separated by '-' for searching")
-    parser.add_argument("--start", default='20200103', help="the start date to crawl blogs")
+    parser.add_argument("--start", default='20200104', help="the start date to crawl blogs")
     parser.add_argument("--end", default='20200901', help="the end date to crawl blogs")
     # parser.add_argument("--display-num", default='100', help="the number of posts per page to be displayed")
     # parser.add_argument("--display-order", default='date', help="the order of pages (sim: similarity, date)")
@@ -265,5 +265,7 @@ if __name__ == '__main__':
         for keyword in re.split('-', args.keywords):
             args.keyword = keyword
             with codecs.open('../data/blogs/Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date), 'w', encoding='utf-8', errors='ignore') as writer:
-                main(args)
-                time.sleep(3 - random.randint(999/7000))
+                report('open Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date))
+                main(args, writer)
+                report('close Blog_{}_{}_{}.txt'.format(args.keyword, args.start_date, args.end_date))
+                time.sleep(3 - random.randint(1, 999) / 7000)
