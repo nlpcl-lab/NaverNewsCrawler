@@ -30,4 +30,3 @@ Crawler.set_category(*tuple(re.split('-', args.target)), subcategories=re.split(
 Crawler.set_date_range(int(re.split('-', args.start_date)[0]), int(re.split('-', args.start_date)[1]),
                        int(re.split('-', args.end_date)[0]), int(re.split('-', args.end_date)[1]))
 Crawler.start()
-
