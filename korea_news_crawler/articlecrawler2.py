@@ -279,7 +279,15 @@ class ArticleCrawler(object):
 
         logger.info("End article crawler ({})".format(category_name))
 
-    def start(self):
+    def start(self, debug=False):
+        if debug:
+            if len(self.selected_categories) > 1:
+                print("please debug only one category.")
+                exit(-1)
+            if self.selected_categories[0] == '경제':
+                self.crawling(self.selected_categories[0], self.selected_subcategories[0])
+            else:
+                self.crawling(self.selected_categories[0])
         # MultiProcess 크롤링 시작
         for category_name in self.selected_categories:
             if category_name == '경제':
@@ -300,9 +308,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog=os.path.basename(sys.argv[0]),
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=__doc__)
-    parser.add_argument("--start-date", default='2017-01',
+    parser.add_argument("--start-date", default='2017-10',
                         help="The start year-month date to crawl news")
-    parser.add_argument("--end-date", default='2017-02',
+    parser.add_argument("--end-date", default='2017-12',
                         help="The end year-month date to crawl news")
     parser.add_argument("--target", default='경제-사회-생활문화-세계-IT과학-오피니언',
                         help="The categories to crawl news(경제-정치-사회-생활문화-세계-IT과학-오피니언)")
@@ -314,4 +322,4 @@ if __name__ == "__main__":
     Crawler.set_category(*tuple(re.split('-', args.target)), subcategories=re.split('-', args.sub_target))
     Crawler.set_date_range(int(re.split('-', args.start_date)[0]), int(re.split('-', args.start_date)[1]),
                            int(re.split('-', args.end_date)[0]), int(re.split('-', args.end_date)[1]))
-    Crawler.start()
+    Crawler.start(debug=False)
