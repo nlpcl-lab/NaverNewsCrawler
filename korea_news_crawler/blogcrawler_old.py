@@ -88,7 +88,7 @@ def get_blog_post(search_blog_keyword, display_count, search_result_blog_page_co
                 try:
                     blog_post_url = response_body_dict['items'][j]['link'].replace("amp;", "")
 
-                    get_blog_post_content_code = requests.get(blog_post_url)
+                    get_blog_post_content_code = requests.get(blog_post_url, headers={'User-Agent':'Mozilla/5.0'})
                     get_blog_post_content_text = get_blog_post_content_code.text
 
                     return
@@ -98,7 +98,7 @@ def get_blog_post(search_blog_keyword, display_count, search_result_blog_page_co
                     for link in get_blog_post_content_soup.select('frame#mainFrame'):
                         real_blog_post_url = "http://blog.naver.com" + link.get('src')
 
-                        get_real_blog_post_content_code = requests.get(real_blog_post_url)
+                        get_real_blog_post_content_code = requests.get(real_blog_post_url, headers={'User-Agent':'Mozilla/5.0'})
                         get_real_blog_post_content_text = get_real_blog_post_content_code.text
 
                         get_real_blog_post_content_soup = BeautifulSoup(get_real_blog_post_content_text, 'lxml')

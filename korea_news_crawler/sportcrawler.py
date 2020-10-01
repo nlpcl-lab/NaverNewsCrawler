@@ -14,7 +14,7 @@ class SportCrawler:
 
     def javascript_totalpage(self, url):
         totalpage_url = url
-        request_content = requests.get(totalpage_url)
+        request_content = requests.get(totalpage_url, headers={'User-Agent':'Mozilla/5.0'})
         document_content = BeautifulSoup(request_content.content, 'html.parser')
         javascript_content = str(document_content.find_all('script', {'type': 'text/javascript'}))
         regex = re.compile(r'\"totalPages\":(?P<num>\d+)')

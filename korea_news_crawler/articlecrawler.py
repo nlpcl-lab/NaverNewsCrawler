@@ -97,7 +97,7 @@ class ArticleCrawler(object):
         remaining_tries = int(max_tries)
         while remaining_tries > 0:
             try:
-                return requests.get(url)
+                return requests.get(url, headers={'User-Agent':'Mozilla/5.0'})
             except requests.exceptions:
                 sleep(55 + random.randint(1,77)/8)
             remaining_tries = remaining_tries - 1
