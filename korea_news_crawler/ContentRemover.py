@@ -17,17 +17,20 @@ import argparse
 import csv
 from glob import glob
 from collections import OrderedDict
-from korea_news_crawler.articleparser import ArticleParser
+try:
+    from korea_news_crawler.articleparser import ArticleParser
+except:
+    from articleparser import ArticleParser
 
 
 def main():
     parser = argparse.ArgumentParser(prog=os.path.basename(sys.argv[0]),
                                      formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=__doc__)
-    parser.add_argument("input", help="input directory including text files")
-    parser.add_argument("input-delimeter", default='\t', help="a delimiter which the input text contains")
-    parser.add_argument("input-fieldnames", default='link-date-publisher-thumbnail-title-body', help="a list of column names")
-    parser.add_argument("output", help="new directory name (not pathway)")
+    parser.add_argument("--input", help="input directory including text files")
+    parser.add_argument("--input-delimeter", default='\t', help="a delimiter which the input text contains")
+    parser.add_argument("--input-fieldnames", default='link-date-publisher-thumbnail-title-body', help="a list of column names")
+    parser.add_argument("--output", help="new directory name (not pathway)")
     args = parser.parse_args()
     fieldnames = re.split('-', args.input_fieldnames)
     title_idx = fieldnames.index('title')
