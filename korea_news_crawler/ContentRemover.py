@@ -41,8 +41,8 @@ def main():
 
     with codecs.open('content_remover.log', 'w', encoding='utf-8', errors='ignore') as logwriter:
         try:
-            if not (os.path.isdir(args.output)):
-                os.makedirs(os.path.join(args.output))
+            if not (os.path.isdir("{}/{}".format('/'.join(re.split('/', args.input)[:-1]), args.output))):
+                os.makedirs(os.path.join("{}/{}".format('/'.join(re.split('/', args.input)[:-1]), args.output)))
         except OSError as e:
             print("Failed to create directory")
             raise
