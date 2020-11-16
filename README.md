@@ -6,15 +6,23 @@
 
 - python3 linux / window 에서 실행가능
 - main.py (or articlecrawler2.py): naver news 수집
-- ContentRemover.py: 수집된 텍스트 전처리
+- ContentRemover.py: 수집된 텍스트 전처리(중복 문서 제거와 불필요한 문자 제거)
+- 언어 모델 학습을 위한 전처리는 kofinbert 프로젝트의 corpus_preprocessor.py를 참조바랍니다.
 
-1. 설치
+## Installation
 
-unzip project or git clone ###
+unzip project or git clone
 
-2. 사용 명령어 예제
+## Steps for crawling naver news
 
+* crawl 2016-07~2016-07 economy news with 8 sub categories
+`
 main.py: python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
+`
+* crawl 2010-09~2010-12 general news with 6 categories
+`
+python3 -u main.py --start-date 2010-09 --end-date 2010-12 --target 정치-사회-세계-생활문화-IT과학-오피니언 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
+`
 
 ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
 
