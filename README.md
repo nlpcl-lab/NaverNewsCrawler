@@ -1,8 +1,11 @@
 # KoreaNewsCrawler
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
+```
 이 크롤러는 아래 저작자 코드를 기반으로 수정된 프로젝트입니다.
-(신한-카이스트 금융 특화 언어 모델 학습을 위한 말뭉치 수집 코드입니다.)
+https://github.com/lumyjuwon/KoreaNewsCrawler
+```
+    
+**신한-카이스트 금융 특화 언어 모델 학습을 위한 말뭉치 수집 코드입니다.**
 
 - python3 linux / window 에서 실행가능
 - main.py (or articlecrawler2.py): naver news 수집
@@ -14,19 +17,26 @@
 unzip project or git clone
 
 ## Steps for crawling naver news
+파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', 'IT과학', '세계', '오피니언'입니다.  
+서브 카테고리는 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처 입니다.
 
-* crawl 2016-07~2016-07 economy news with 8 sub categories
-`
-main.py: python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
-`
-* crawl 2010-09~2010-12 general news with 6 categories
-`
-python3 -u main.py --start-date 2010-09 --end-date 2010-12 --target 정치-사회-세계-생활문화-IT과학-오피니언 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
-`
+각 column은 date-category-publisher-title-body-link 이며,
+경제 뉴스의 column은 date-subcategory-category-publisher-title-body-link 입니다.
 
-ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
+* main.py: crawl 2016-07~2016-07 economy news with 8 sub categories, saving the news in this project.
+`
+python main.py --start-date 2016-07 --end-date 2016-07 --target 경제 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
+`
+* main.py: crawl 2010-09~2010-12 general news with 6 categories
+`
+python main.py --start-date 2010-09 --end-date 2010-12 --target 정치-사회-세계-생활문화-IT과학-오피니언 --sub-target 증권-금융-부동산-산업재계-글로벌경제-경제일반-생활경제-증기벤처
+`
+## Steps for cleaning crawled news
 
-=================================================================================================
+* ContentRemover.py: clean the news from <input_dir> to <output_dir>
+`
+python ContentRemover.py --input naver_news --output naver_news_preprocessed --input-delimeter \t --input-fieldnames link-date-publisher-thumbnail-title-body
+`
 
 ## User Python Installation
   * **KoreaNewsCrawler**
@@ -37,7 +47,7 @@ ContentRemover.py: python ContentRemover.py dataset/naver_news naver_news_clean
 * **set_category(category_name)**
   
  이 메서드는 수집하려고자 하는 카테고리는 설정하는 메서드입니다.  
- 파라미터에 들어갈 수 있는 카테고리는 '정치', '경제', '사회', '생활문화', 'IT과학', '세계', '오피니언'입니다.  
+
  파라미터는 여러 개 들어갈 수 있습니다.  
  category_name: 정치, 경제, 사회, 생활문화, IT과학, 세계, 오피니언 or politics, economy, society, living_culture, IT_science, world, opinion
   
