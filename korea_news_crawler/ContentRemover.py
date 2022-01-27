@@ -1,6 +1,6 @@
 ################################################################
 # 2020.11.16 ContentRemover.py
-# input text (신한 Naver news data)에서 title과 body text를 전처리 합니다.
+# input text (Naver news data)에서 title과 body text를 전처리 합니다.
 #   - 기자 이름, 출판사 광고, 관련 뉴스 문구 삭제
 #   - 영어, 한문, 한글 외 언어, 특수 문자 제거
 #   - 인터넷 매크로 문구, 불필요한 유니코드 제거

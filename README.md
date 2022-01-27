@@ -4,8 +4,6 @@
 이 크롤러는 아래 저작자 코드를 기반으로 수정된 프로젝트입니다.
 https://github.com/lumyjuwon/KoreaNewsCrawler
 ```
-    
-**신한-카이스트 금융 특화 언어 모델 학습을 위한 말뭉치 수집 코드입니다.**
 
 - python3 linux / window 에서 실행가능
 - main.py (or articlecrawler2.py): naver news 수집

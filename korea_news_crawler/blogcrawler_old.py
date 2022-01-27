@@ -23,8 +23,7 @@ import urllib.parse
 from bs4 import BeautifulSoup
 
 now = datetime.datetime.now()
-naver_client_id = "esIPeSYRRIJkZnqf9vgt"
-naver_client_secret = "_RkZSXRQZl"
+
 
 
 def naver_blog_crawling(search_blog_keyword, display_count, sort_type):
