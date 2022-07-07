@@ -8,7 +8,6 @@ https://github.com/lumyjuwon/KoreaNewsCrawler
 - python3 linux / window 에서 실행가능
 - main.py (or articlecrawler2.py): naver news 수집
 - ContentRemover.py: 수집된 텍스트 전처리(중복 문서 제거와 불필요한 문자 제거)
-- 언어 모델 학습을 위한 전처리는 kofinbert 프로젝트의 corpus_preprocessor.py를 참조바랍니다.
 
 ## Installation
 
